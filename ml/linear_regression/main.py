@@ -3,6 +3,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 from lib.math import MathOps
+from lib.validators import Validator
 
 class LinearRegression:
     def __init__(self, x, y):
@@ -19,24 +20,13 @@ class LinearRegression:
         self._intercept = self._compute_intercept()
 
     def _validate(self, x, y):
-        if len(x) == 0 or len(y) == 0:
-            raise ValueError("Input arrays cannot be empty.")
+        Validator.validate_numeric_list(x, name="x")
+        Validator.validate_numeric_list(y, name="y")
+
         if len(x) != len(y):
             raise ValueError("x and y must have the same length.")
         if len(x) < 2:
             raise ValueError("At least 2 data points are required.")
-        if not all(isinstance(v, (int, float)) for v in x):
-            raise TypeError("x must contain only numeric values.")
-        if not all(isinstance(v, (int, float)) for v in y):
-            raise TypeError("y must contain only numeric values.")
-        if any(v != v for v in x):
-            raise ValueError("x contains NaN values.")
-        if any(v != v for v in y):
-            raise ValueError("y contains NaN values.")
-        if any(abs(v) == float('inf') for v in x):
-            raise ValueError("x contains infinite values.")
-        if any(abs(v) == float('inf') for v in y):
-            raise ValueError("y contains infinite values.")
         if len(set(x)) == 1:
             raise ValueError("All x values are the same. Cannot compute slope.")
 
