@@ -21,7 +21,8 @@ from-scratch/
 │   ├── array.py          # Custom n-dimensional array
 │   ├── math_ops.py       # norm, euclidean, manhattan, mean, std, covariance
 │   ├── random.py         # LCGRandom, XorShiftRandom
-│   └── utils.py          # Shared utilities (e.g. generate_data)
+│   ├── utils.py          # Shared utilities (e.g. generate_data)
+│   └── validators.py     # Universal input validation
 │
 ├── ml/
 │   ├── kmeans/
@@ -29,8 +30,21 @@ from-scratch/
 │   └── linear_regression/
 │       └── main.py       # Linear Regression
 │
+├── sorting/
+│   ├── bubble_sort/
+│   │   └── main.py       # Bubble Sort
+│   ├── insertion_sort/
+│   │   └── main.py       # Insertion Sort
+│   ├── selection_sort/
+│   │   └── main.py       # Selection Sort
+│   ├── quick_sort/
+│   │   └── main.py       # Quick Sort (coming soon)
+│   ├── merge_sort/
+│   │   └── main.py       # Merge Sort (coming soon)
+│   └── counting_sort/
+│       └── main.py       # Counting Sort (coming soon)
+│
 ├── data_structures/      # (coming soon)
-├── sorting/              # (coming soon)
 └── README.md
 ```
 
@@ -44,9 +58,11 @@ Each module only depends on lower-level modules — no circular dependencies.
 array.py        →  nothing
 math_ops.py     →  array.py
 random.py       →  nothing
+validators.py   →  nothing
 utils.py        →  array.py, random.py
 ml/kmeans       →  array, math_ops, random, utils
-ml/linear_reg   →  array, math_ops
+ml/linear_reg   →  array, math_ops, validators
+sorting/*       →  validators
 ```
 
 ---
@@ -61,6 +77,7 @@ ml/linear_reg   →  array, math_ops
 | `math_ops.py` | `MathOps` — `norm`, `euclidean_distance`, `manhattan_distance`, `mean`, `std`, `covariance` |
 | `random.py` | `LCGRandom`, `XorShiftRandom` — `random`, `uniform`, `randint`, `choice` |
 | `utils.py` | `generate_data` — combines `Array` + `Random` |
+| `validators.py` | `Validator` — `validate_numeric_list` |
 
 ### `ml/` — Machine Learning
 
@@ -71,19 +88,23 @@ ml/linear_reg   →  array, math_ops
 | Decision Tree | — | 🔜 Soon |
 | Neural Network (MLP) | — | 🔜 Soon |
 
+### `sorting/` — Sorting Algorithms
+
+| Algorithm | Time (best) | Time (worst) | Space | Status |
+|-----------|-------------|--------------|-------|--------|
+| Bubble Sort | O(n) | O(n²) | O(1) | ✅ Done |
+| Insertion Sort | O(n) | O(n²) | O(1) | ✅ Done |
+| Selection Sort | O(n²) | O(n²) | O(1) | ✅ Done |
+| Quick Sort | O(n log n) | O(n²) | O(log n) | 🔜 Soon |
+| Merge Sort | O(n log n) | O(n log n) | O(n) | 🔜 Soon |
+| Counting Sort | O(n + k) | O(n + k) | O(k) | 🔜 Soon |
+
 ### `data_structures/` — Data Structures
 
 | Structure | Status |
 |-----------|--------|
 | Linked List | 🔜 Soon |
 | Binary Tree | 🔜 Soon |
-
-### `sorting/` — Sorting Algorithms
-
-| Algorithm | Status |
-|-----------|--------|
-| Bubble Sort | 🔜 Soon |
-| Quick Sort | 🔜 Soon |
 
 ---
 
@@ -94,11 +115,9 @@ from lib.random import XorShiftRandom
 from lib.utils import generate_data
 from ml.kmeans.main import KMeansClustering
 
-# Generate random data
 rng = XorShiftRandom(seed=42)
 data = generate_data(rng, rows=100, cols=2, low=0.0, high=10.0)
 
-# Fit the model
 kmeans = KMeansClustering(n_clusters=3, metric='euclidean')
 kmeans.fit(data)
 
@@ -119,6 +138,20 @@ model = LinearRegression(x, y)
 print("Prediction for x=6:", model.predict(6.0))
 ```
 
+## Example — Sorting from Scratch
+
+```python
+from sorting.bubble_sort.main import BubbleSort
+from sorting.insertion_sort.main import InsertionSort
+from sorting.selection_sort.main import SelectionSort
+
+A = [-5, 3, 2, 1, -3, -3, 7, 2, 2]
+
+print(BubbleSort(A[:]).sort())    # [-5, -3, -3, 1, 2, 2, 2, 3, 7]
+print(InsertionSort(A[:]).sort()) # [-5, -3, -3, 1, 2, 2, 2, 3, 7]
+print(SelectionSort(A[:]).sort()) # [-5, -3, -3, 1, 2, 2, 2, 3, 7]
+```
+
 ---
 
 ## Design Principles
@@ -135,7 +168,6 @@ print("Prediction for x=6:", model.predict(6.0))
 
 ```
 python >= 3.8
-matplotlib  # only for visualization
 ```
 
 > All core algorithms run with zero dependencies.
