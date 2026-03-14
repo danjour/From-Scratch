@@ -1,6 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+
+
 from lib.array import Array
 from lib.random import XorShiftRandom
-from lib.math_ops import MathOps
+from lib.math import MathOps
 from lib.utils import generate_data
   
 class KMeansClustering:
