@@ -38,7 +38,7 @@ from-scratch/
 │   ├── selection_sort/
 │   │   └── main.py       # Selection Sort
 │   ├── quick_sort/
-│   │   └── main.py       # Quick Sort (coming soon)
+│   │   └── main.py       # Quick Sort
 │   ├── merge_sort/
 │   │   └── main.py       # Merge Sort (coming soon)
 │   └── counting_sort/
