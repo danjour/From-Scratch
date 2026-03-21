@@ -40,7 +40,7 @@ from-scratch/
 │   ├── quick_sort/
 │   │   └── main.py       # Quick Sort
 │   ├── merge_sort/
-│   │   └── main.py       # Merge Sort (coming soon)
+│   │   └── main.py       # Merge Sort
 │   └── counting_sort/
 │       └── main.py       # Counting Sort (coming soon)
 │
